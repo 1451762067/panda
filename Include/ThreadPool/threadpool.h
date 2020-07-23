@@ -82,7 +82,9 @@ class CThreadPoolProxy: public IThreadPool
 	public:
 		static IThreadPool *instance()
 		{
-			static CThreadPoolProxy threadpoolproxy;
+			static CThreadPoolProxy threadpoolproxy;  //那么静态变量的初始化在代码运行的时候才会进行，所以如果是运行在多线程的环境下，
+								  //那么这行代码有可能被多次运行，重复构造，从而造成不可预料的后果，所以这行代码最好放在类中，
+								  //而不是类方法中
 			return &threadpoolproxy;
 		}
 		int pushtask(IThreadHandle * handle, bool block)
